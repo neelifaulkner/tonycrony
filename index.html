@@ -1,35 +1,139 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <base href="/tonycrony/">
+<title>Tony Crony</title>
 
-  <title>Tony Crony | Full Project Coming Soon</title>
+<style>
+:root {
+    --bg-dark: #020c18;
+    --bg-light: #07192d;
+    --accent: #ff7a00;
+    --text: #f5efe6;
+}
 
-  <meta
-    name="description"
-    content="Tony Crony, an investigative reporting project, is coming soon."
-  />
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-  <link rel="stylesheet" href="style.css" />
+html,
+body {
+    height: 100%;
+}
+
+body {
+    background:
+        radial-gradient(
+            circle at top center,
+            rgba(12, 33, 58, 0.8),
+            transparent 50%
+        ),
+        linear-gradient(
+            180deg,
+            var(--bg-light),
+            var(--bg-dark)
+        );
+
+    font-family: Georgia, serif;
+    color: var(--text);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    min-height: 100vh;
+}
+
+.container {
+    width: min(1600px, 95vw);
+    text-align: center;
+}
+
+.map-image {
+    width: 100%;
+    height: auto;
+
+    display: block;
+
+    border-radius: 4px;
+
+    box-shadow:
+        0 0 80px rgba(0,0,0,.4),
+        0 20px 60px rgba(0,0,0,.3);
+}
+
+.coming-soon {
+    margin-top: 55px;
+}
+
+.coming-soon h1 {
+    font-size: clamp(2rem, 5vw, 5rem);
+
+    font-weight: 400;
+
+    letter-spacing: 0.18em;
+
+    color: var(--text);
+
+    text-transform: uppercase;
+
+    text-shadow:
+        0 0 20px rgba(0,0,0,.5);
+}
+
+.accent-line {
+    width: 220px;
+    height: 2px;
+
+    background: var(--accent);
+
+    margin: 32px auto 0;
+
+    box-shadow:
+        0 0 20px rgba(255,122,0,.8);
+}
+
+@media (max-width: 768px) {
+
+    .container {
+        width: 95%;
+    }
+
+    .coming-soon {
+        margin-top: 35px;
+    }
+
+    .coming-soon h1 {
+        letter-spacing: 0.08em;
+    }
+
+    .accent-line {
+        width: 140px;
+    }
+}
+</style>
+
 </head>
+<body>
 
-<body class="coming-soon-page">
-  <main class="coming-soon">
-    <section class="coming-soon-inner">
-      <img
+<div class="container">
+
+    <img
         src="orangebeachmap.png"
-        alt="Dark map of Orange Beach"
-        class="coming-soon-map"
-      />
+        alt="Orange Beach Map"
+        class="map-image"
+    >
 
-      <div class="coming-soon-text">
+    <div class="coming-soon">
         <h1>FULL PROJECT COMING SOON</h1>
-        <div class="coming-soon-line"></div>
-      </div>
-    </section>
-  </main>
+        <div class="accent-line"></div>
+    </div>
+
+</div>
+
 </body>
 </html>
