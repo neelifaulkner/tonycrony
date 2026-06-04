@@ -6,10 +6,15 @@
 
 <title>Tony Crony</title>
 
+<meta
+    name="description"
+    content="An investigative reporting project by Neeli Faulkner."
+>
+
+<meta name="author" content="Neeli Faulkner">
+
 <style>
 :root {
-    --bg-dark: #020c18;
-    --bg-light: #07192d;
     --accent: #ff7a00;
     --text: #f5efe6;
 }
@@ -26,17 +31,7 @@ body {
 }
 
 body {
-    background:
-        radial-gradient(
-            circle at top center,
-            rgba(12, 33, 58, 0.8),
-            transparent 50%
-        ),
-        linear-gradient(
-            180deg,
-            var(--bg-light),
-            var(--bg-dark)
-        );
+    background: #000000;
 
     font-family: Georgia, serif;
     color: var(--text);
@@ -59,23 +54,21 @@ body {
 
     display: block;
 
-    border-radius: 4px;
-
     box-shadow:
-        0 0 80px rgba(0,0,0,.4),
-        0 20px 60px rgba(0,0,0,.3);
+        0 0 120px rgba(0, 20, 40, 0.6),
+        0 30px 80px rgba(0,0,0,.5);
 }
 
 .coming-soon {
-    margin-top: 55px;
+    margin-top: 35px;
 }
 
 .coming-soon h1 {
-    font-size: clamp(2rem, 5vw, 5rem);
+    font-size: clamp(1.75rem, 2.8vw, 3.5rem);
 
     font-weight: 400;
 
-    letter-spacing: 0.18em;
+    letter-spacing: 0.15em;
 
     color: var(--text);
 
@@ -104,7 +97,7 @@ body {
     }
 
     .coming-soon {
-        margin-top: 35px;
+        margin-top: 25px;
     }
 
     .coming-soon h1 {
@@ -123,7 +116,7 @@ body {
 <div class="container">
 
     <img
-        src="orangebeachmap.png"
+        src="orangebeachmap2.png"
         alt="Orange Beach Map"
         class="map-image"
     >
