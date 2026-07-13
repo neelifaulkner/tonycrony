@@ -1,1 +1,312 @@
-Hello, world.
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tony Crony</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Special+Elite&display=swap');
+  :root{
+    --red:#A2130C; --black:#141210; --white:#ffffff;
+    --manila:#EFE6CC; --manila-deep:#C9AF7C; --kraft:#8A6E42; --tan-dark:#5E4B2E; --rust:#7A3B22;
+    --parchment:#E3D6AE; --olive:#6E5A3A;
+    --ink:#1a1a1a; --muted:#a89b7f;
+    --line:#ddd2b4; --bg:#0B0A08; --card:#ffffff;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.5;-webkit-font-smoothing:antialiased}
+  header{background:
+      repeating-linear-gradient(0deg, rgba(255,255,255,.02) 0px, rgba(255,255,255,.02) 1px, transparent 1px, transparent 48px),
+      repeating-linear-gradient(90deg, rgba(255,255,255,.02) 0px, rgba(255,255,255,.02) 1px, transparent 1px, transparent 48px),
+      var(--black);
+    color:var(--white);padding:40px 22px 28px;border-bottom:6px solid var(--red)}
+  .wrap{max-width:900px;margin:0 auto;padding:0 20px}
+  h1{margin:0 0 8px;font-size:40px;letter-spacing:1px;font-weight:400;color:var(--white);
+    font-family:'Special Elite', 'Courier New', monospace}
+  .sub{opacity:.9;font-size:15px;color:var(--white)}
+  .byline{opacity:.6;font-size:12px;color:var(--manila);margin-top:6px;letter-spacing:.3px}
+  .controls{max-width:900px;margin:18px auto 0;padding:0 20px;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+  .controls .lab{font-size:13px;color:var(--muted);margin-right:2px}
+  .chip{border:1.5px solid var(--line);background:#fff;border-radius:20px;padding:6px 14px;font-size:13px;
+    font-weight:600;cursor:pointer;color:var(--muted);transition:.15s;user-select:none}
+  .chip[data-k="Lawsuit"].on{background:var(--red);border-color:var(--red);color:#fff}
+  .chip[data-k="Context"].on{background:var(--black);border-color:var(--black);color:#fff}
+  .chip[data-k="Politics"].on{background:var(--tan-dark);border-color:var(--tan-dark);color:#fff}
+  .chip[data-k="Ethics"].on{background:var(--kraft);border-color:var(--kraft);color:#fff}
+  .chip[data-k="Land"].on{background:var(--manila-deep);border-color:var(--manila-deep);color:var(--black)}
+  .chip[data-k="Social"].on{background:var(--rust);border-color:var(--rust);color:#fff}
+  .chip[data-k="Schools"].on{background:var(--olive);border-color:var(--olive);color:#fff}
+  .chip[data-k="Meetings"].on{background:var(--parchment);border-color:var(--parchment);color:var(--black)}
+  .chip.all.on{background:var(--red);border-color:var(--red);color:#fff}
+  main{max-width:900px;margin:22px auto 60px;padding:0 20px}
+  .tl{position:relative;margin-left:8px;padding-left:30px;border-left:3px solid var(--line)}
+  .item{position:relative;margin:0 0 16px}
+  .dot{position:absolute;left:-41px;top:6px;width:16px;height:16px;border-radius:50%;
+    border:3px solid #fff;box-shadow:0 0 0 2px var(--line)}
+  .item[data-k="Lawsuit"] .dot{background:var(--red)}
+  .item[data-k="Context"] .dot{background:var(--black)}
+  .item[data-k="Politics"] .dot{background:var(--tan-dark)}
+  .item[data-k="Ethics"] .dot{background:var(--kraft)}
+  .item[data-k="Land"] .dot{background:var(--manila-deep)}
+  .item[data-k="Social"] .dot{background:var(--rust)}
+  .item[data-k="Schools"] .dot{background:var(--olive)}
+  .item[data-k="Meetings"] .dot{background:var(--parchment)}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 15px;
+    box-shadow:0 1px 3px rgba(20,40,70,.05)}
+  .item[data-k="Lawsuit"] .card{border-left:4px solid var(--red)}
+  .item[data-k="Context"] .card{border-left:4px solid var(--black)}
+  .item[data-k="Politics"] .card{border-left:4px solid var(--tan-dark)}
+  .item[data-k="Ethics"] .card{border-left:4px solid var(--kraft)}
+  .item[data-k="Land"] .card{border-left:4px solid var(--manila-deep)}
+  .item[data-k="Social"] .card{border-left:4px solid var(--rust)}
+  .item[data-k="Schools"] .card{border-left:4px solid var(--olive)}
+  .item[data-k="Meetings"] .card{border-left:4px solid var(--parchment)}
+  .date{font-weight:700;font-size:13.5px;color:var(--ink);display:flex;justify-content:space-between;align-items:center;gap:10px}
+  .tag{font-size:10.5px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;padding:2px 8px;border-radius:6px;color:#fff;white-space:nowrap}
+  .tag.Lawsuit{background:var(--red)} .tag.Context{background:var(--black)} .tag.Politics{background:var(--tan-dark)} .tag.Ethics{background:var(--kraft)} .tag.Land{background:var(--manila-deep);color:var(--black)} .tag.Social{background:var(--rust)} .tag.Schools{background:var(--olive)} .tag.Meetings{background:var(--parchment);color:var(--black)}
+  .desc{font-size:14px;margin-top:5px;color:#26313f}
+  .desc b{color:var(--ink)}
+  .desc ul{margin:6px 0 0;padding-left:18px}
+  .desc li{margin:2px 0}
+  .subtags{margin-top:10px;padding-top:9px;border-top:1px dashed var(--line);display:flex;flex-wrap:wrap;gap:6px}
+  .subtag{font-size:10.5px;font-weight:600;color:var(--tan-dark);background:var(--manila);
+    border:1px solid var(--manila-deep);border-radius:12px;padding:3px 10px;cursor:pointer;
+    transition:.15s;white-space:nowrap;line-height:1.4}
+  .subtag:hover{background:var(--manila-deep);color:var(--black)}
+  .subtag.active-filter{background:var(--red);border-color:var(--red);color:#fff}
+  .expand-toggle{margin-top:10px;background:none;border:none;color:var(--red);font-size:12px;
+    font-weight:700;letter-spacing:.2px;cursor:pointer;padding:2px 0;display:flex;align-items:center;gap:5px}
+  .expand-toggle:hover{color:#7a0f09;text-decoration:underline}
+  .expand-toggle .arrow{display:inline-block;transition:transform .15s;font-size:10px}
+  .item.expanded .expand-toggle .arrow{transform:rotate(90deg)}
+  .expand-panel{display:none;margin-top:10px;padding:12px 14px;background:var(--manila);
+    border:1px solid var(--manila-deep);border-radius:10px}
+  .item.expanded .expand-panel{display:block}
+  .expand-panel .files-label{font-size:10.5px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;
+    color:var(--tan-dark);margin-bottom:6px}
+  .file-link{display:flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--manila-deep);
+    border-radius:8px;padding:7px 10px;margin-bottom:6px;text-decoration:none;color:var(--ink);
+    font-size:13px;font-weight:600;transition:.15s}
+  .file-link:last-child{margin-bottom:0}
+  .file-link:hover{background:var(--manila-deep)}
+  .file-link .file-icon{flex-shrink:0}
+  .no-files{font-size:13px;color:var(--muted);font-style:italic}
+  #subtagBanner{display:none;max-width:900px;margin:0 auto 16px;padding:0 20px}
+  #subtagBanner.show{display:block}
+  .banner-inner{background:var(--black);color:#fff;border-radius:10px;padding:10px 16px;
+    display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:13px;
+    border-left:4px solid var(--red)}
+  .banner-inner b{color:var(--parchment)}
+  .clear-btn{background:var(--red);color:#fff;border:none;border-radius:8px;padding:6px 13px;
+    font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap}
+  .clear-btn:hover{background:#c2170e}
+  footer{max-width:900px;margin:0 auto 50px;padding:0 20px;color:var(--muted);font-size:12px;line-height:1.6}
+  .legend-note{background:var(--manila);border:1px solid var(--manila-deep);border-radius:10px;padding:10px 14px;font-size:13px;color:var(--tan-dark);margin-bottom:18px}
+  .hidden{display:none}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <h1>Tony Crony</h1>
+    <div class="sub">A timeline of the controversies surrounding Orange Beach Mayor Tony Kennon</div>
+    <div class="byline">A Special Investigation by Neeli Faulkner for Murder Creek Media</div>
+  </div>
+</header>
+
+<div class="controls">
+  <span class="lab">Filter:</span>
+  <span class="chip all on" data-k="all">All</span>
+  <span class="chip on" data-k="Context">Context</span>
+  <span class="chip on" data-k="Lawsuit">Lawsuit</span>
+  <span class="chip on" data-k="Politics">Politics</span>
+  <span class="chip on" data-k="Ethics">SEI/Ethics</span>
+  <span class="chip on" data-k="Land">Land Deals</span>
+  <span class="chip on" data-k="Social">Social Media</span>
+  <span class="chip on" data-k="Schools">City Schools</span>
+  <span class="chip on" data-k="Meetings">City Council Meeting / Town Hall</span>
+</div>
+
+<div id="subtagBanner">
+  <div class="banner-inner">
+    <span>Filtering by: <b id="subtagBannerText"></b></span>
+    <button class="clear-btn" id="subtagClearBtn">✕ Clear filter</button>
+  </div>
+</div>
+
+<main>
+  <div class="legend-note">Color marks the tag each event belongs to: <b style="color:var(--black)">Context</b>, <b style="color:var(--red)">Lawsuit</b>, <b style="color:var(--tan-dark)">Politics</b>, <b style="color:var(--kraft)">SEI/Ethics</b>, <b style="color:var(--manila-deep)">Land Deals</b>, <b style="color:var(--rust)">Social Media</b>, <b style="color:var(--olive)">City Schools</b>, and <b style="color:var(--parchment)">City Council Meeting / Town Hall</b>. Tap a chip above to isolate a tag. Each card also has clickable name/entity tags at the bottom &mdash; click one to see every other card connected to that person, property, or topic.</div>
+  <div class="tl" id="tl"></div>
+</main>
+
+<footer>
+  <div style="color:var(--red);font-weight:700;letter-spacing:.5px;text-transform:uppercase;font-size:11px;margin-bottom:8px">Murder Creek Media</div>
+  Compiled from the primary court file (CV-2008-575, complaint &amp; discovery), Alabama Ethics Commission Statement of Economic Interests filings, and reporting by the Alabama Political Reporter, Lagniappe, Alabama Gazette, Fox10, Alabama Public Radio, WSFA, Gulf Coast Media and public federal dockets. The original settlement date appears as both "June 2005" and "June 2006" within the filing; the ~$47,500 / 2010 resolution and several 2024–2026 items rest on news reporting. The November 2025 ethics complaint is sourced to an anonymous tip and is unconfirmed. Shore Acres purchase/sale prices and profit percentages are drawn from recorded transaction amounts as reported; they have not been independently verified against the county deed records here, and property appreciation in this area is common following subdivision approvals. Allegations are allegations: Kennon has denied wrongdoing throughout, no criminal wrongdoing has been publicly established regarding the SEI amendments or the Shore Acres transactions, and the 2005 and 2010 settlements carried no admission of liability. The Board of Education items are drawn from a first-person community explainer post about a May 6, 2026 council meeting and 2025 school-board vacancy process; some dates (e.g. the Stephen Lewis appointment) are approximate and none of this section has been independently cross-checked against official council minutes. Prepared July 12, 2026.
+</footer>
+
+<script>
+const EVENTS = [
+  ["Aug 2004","Politics","<b>Steve Russo</b> wins the Orange Beach mayoral race (by &lt;200 votes); Jeff Silvers and Joni Blalock join the City Council.",
+    ["Steve Russo","Jeff Silvers","Joni Blalock","Orange Beach City Council","Orange Beach Mayoral Election"],[]],
+  ["Sep 16, 2004","Context","<b>Hurricane Ivan</b> devastates Orange Beach/Gulf Shores, triggering a rebuilding and condo-development wave.",
+    ["Hurricane Ivan"],[]],
+  ["Feb 2005","Lawsuit","<b>Jil Walker</b> sits on the Orange Beach <b>Planning Commission</b>; <b>Tony Kennon</b> is a <b>City Councilman</b>. On a city planning retreat to the Mississippi Gulf Coast, Kennon allegedly solicits Walker for sex in exchange for advancing her career &mdash; the underlying incident later at the center of <b>Walker v. Kennon (CV-2008-575)</b>.",
+    ["Jil Walker","Tony Kennon","Walker v. Kennon","Orange Beach Planning Commission"],[]],
+  ["Jun 2005","Lawsuit","Walker, Kennon &amp; the City sign a <b>Settlement &amp; Release Agreement</b> &mdash; with non-disparagement, non-disclosure &amp; confidentiality terms &mdash; resolving her report. This private settlement predates and is separate from the 2008 lawsuit, <b>Walker v. Kennon (CV-2008-575)</b>. (One interrogatory dates it “June 2006.”)",
+    ["Jil Walker","Tony Kennon","Walker v. Kennon"],[]],
+  ["Dec 2005 – Jan 20, 2006","Politics","Federal <b>corruption indictment</b> of Mayor Russo unsealed; co-defendants include City Attorney Larry Sutley and Councilman/Planning Commissioner Joe McCarron. Russo resigns as mayor.",
+    ["Steve Russo","Larry Sutley","Joe McCarron"],[]],
+  ["Sep 1, 2006","Politics","A federal jury <b>convicts Russo</b> (fraud, diverting campaign funds, obstruction); 9-year sentence.",
+    ["Steve Russo"],[]],
+  ["Jul 15, 2008","Lawsuit","Kennon tells a <b>Mobile Press-Register</b> reporter that Walker offered him a <b>bribe</b> to support the Harbortown development and had “an axe to grind” &mdash; an alleged breach of the 2005 confidentiality settlement, and a claim later central to <b>Walker v. Kennon (CV-2008-575)</b>.",
+    ["Tony Kennon","Jil Walker","Walker v. Kennon","Harbortown"],[]],
+  ["Jul 22, 2008","Lawsuit","At an Orange Beach public forum, both <b>Kennon</b> and Councilman <b>Ed Carroll</b> call Walker's sexual-harassment complaints “untruthful” &mdash; statements at issue in the soon-to-be-filed <b>Walker v. Kennon (CV-2008-575)</b>.",
+    ["Tony Kennon","Ed Carroll","Jil Walker","Walker v. Kennon"],[]],
+  ["Aug 21, 2008","Lawsuit","Kennon <b>testifies in Baldwin County Circuit Court</b> and tells reporters Walker tried to bribe him and “fabricated” her harassment claims &mdash; ahead of Walker's forthcoming suit, <b>Walker v. Kennon (CV-2008-575)</b>.",
+    ["Tony Kennon","Jil Walker","Walker v. Kennon"],[]],
+  ["Aug 26, 2008","Politics","<b>Kennon is elected Mayor of Orange Beach</b>, campaigning as a clean-government reformer after the Russo scandal.",
+    ["Tony Kennon","Orange Beach Mayoral Election"],[]],
+  ["Sep 4, 2008","Lawsuit","<b>Walker files suit</b> — CV-2008-575 — alleging breach of contract, invasion of privacy, defamation, outrage &amp; criminal solicitation. Discovery names a <b>second accuser, “Cherie Stobert.”</b>",
+    ["Jil Walker","Tony Kennon","Walker v. Kennon","Cherie Stobert"],[{label:"Jil Walker — Court Document (PDF)", url:"https://neelifaulkner.github.io/tonycrony/documents/JilWalker/JilWalker_court_doc.pdf"}]],
+  ["Jun 18, 2009","Politics","Russo <b>pleads guilty to four state felonies</b> (7-year concurrent sentence), closing the corruption chapter that framed Kennon's rise.",
+    ["Steve Russo"],[]],
+  ["Apr 20, 2010","Context","<b>BP Deepwater Horizon oil spill</b>; Orange Beach occupancy falls to ~40% — the defining crisis of Kennon's first term.",
+    ["BP Deepwater Horizon Oil Spill"],[]],
+  ["2010","Lawsuit","The City <b>settles Walker v. Kennon (CV-2008-575) for ~$47,500</b>, with Kennon denying wrongdoing.",
+    ["Jil Walker","Tony Kennon","Walker v. Kennon"],[]],
+  ["2012 / 2016","Politics","Kennon runs essentially <b>unopposed</b> and consolidates power.",
+    ["Tony Kennon","Orange Beach Mayoral Election"],[]],
+  ["Jan 2014","Land","The Orange Beach Planning Commission approves a <b>subdivision plat</b> for a 7.51-acre parcel then owned by Orange Beach Presbyterian Church &mdash; land that would later become the <b>Shore Acres</b> subdivision.",
+    ["Shore Acres","Orange Beach Planning Commission","Orange Beach Presbyterian Church"],[]],
+  ["Feb 2014","Land","<b>Tony and Paula Kennon purchase the 7.51-acre parcel for $275,000</b> &mdash; the same parcel covered by the subdivision plat approved weeks earlier, which would later become the <b>Shore Acres</b> subdivision.",
+    ["Shore Acres","Tony Kennon","Paula Kennon"],[]],
+  ["Feb 2016","Land","The Kennons <b>sell the Shore Acres parcel to Shine Lee Properties for $429,000</b> &mdash; a profit of roughly $154,000 (~56%) in two years.",
+    ["Shore Acres","Tony Kennon","Paula Kennon","Shine Lee Properties"],[]],
+  ["2018","Land","The <b>Shore Acres</b> parcel returns to the <b>Orange Beach Planning Commission</b> for additional subdivision approvals.",
+    ["Shore Acres","Orange Beach Planning Commission"],[]],
+  ["2018","Land","Shortly after those approvals, <b>Shine Lee Properties sells the Shore Acres parcel to 68V Shore Acres 2018, LLC</b> &mdash; an entity tied to a major Baldwin County developer &mdash; for approximately <b>$1.485 million</b>, a reported profit of ~$1,056,380 (~246%) over roughly two years and ten months.",
+    ["Shore Acres","Shine Lee Properties","68V Shore Acres 2018, LLC"],[]],
+  ["2020","Politics","Kennon <b>re-elected (~66%)</b>, defeating Dan “Gilley” Hayes.",
+    ["Tony Kennon","Dan “Gilley” Hayes","Orange Beach Mayoral Election"],[]],
+  ["Sep 2, 2024","Politics","The <b>Labor Day incident</b>: ~1 a.m. at the city-owned <b>Coastal Resources Building</b>, witness Tierra Morrill reports a naked man grabbing a woman by the hair and punching her (“You don’t ever walk out on me”). Police respond; a man says “This is Tony Kennon… my office”; officers leave without contacting the woman. A welfare check on Paula Kennon follows.",
+    ["Labor Day Incident","Tony Kennon","Paula Kennon","Tierra Morrill"],[]],
+  ["Jan 15, 2025","Ethics","Kennon's original <b>2024 Statement of Economic Interests</b> filed with the Alabama Ethics Commission, disclosing only two business entities: Law and Land Title, LLC and Gulf Coast 1031 Services, LLC.",
+    ["Tony Kennon","Statement of Economic Interests","Alabama Ethics Commission"],[]],
+  ["Mid-Jul 2025","Social","<b>Lagniappe first reports</b> the Labor Day incident (~10 months later). Kennon denies any domestic violence; no charges filed.",
+    ["Labor Day Incident","Tony Kennon","Lagniappe"],[]],
+  ["Aug 2025","Social","<b>Body-cam audio leaks</b> from the Labor Day incident, intensifying public attention on the case.",
+    ["Labor Day Incident","Tony Kennon"],[]],
+  ["Aug 2025","Lawsuit","Attorney C.C. Dixon-Moreno <b>sues over withheld Labor Day incident footage</b> — <b>Dixon-Moreno v. City of Orange Beach, 1:25-cv-00325 (S.D. Ala.)</b>. The 2010 Walker v. Kennon settlement resurfaces as “pattern” evidence.",
+    ["Labor Day Incident","C.C. Dixon-Moreno","Dixon-Moreno v. City of Orange Beach","Walker v. Kennon"],[]],
+  ["Aug 26, 2025","Politics","<b>Kennon re-elected</b> mayor amid the controversy — ~1,897 votes (60%) to council president Jeff Boyd's 1,284.",
+    ["Tony Kennon","Jeff Boyd","Orange Beach Mayoral Election"],[]],
+  ["Aug 26, 2025","Schools","<b>Robert Stuart is elected to the Orange Beach City Council</b> (Place 5) and resigns his seat on the <b>Orange Beach City School Board</b>, creating a vacancy. Stuart had previously been elected to the Baldwin County Board of Education before joining the OBCS board &mdash; at the time, the only OBCS board member who had been directly chosen by voters for a school board seat.",
+    ["Robert Stuart","Orange Beach City School Board","Orange Beach City Council"],[]],
+  ["Sep 2, 2025","Lawsuit","Federal judge Jeffrey Beaverstock <b>dismisses Dixon-Moreno v. City of Orange Beach</b> as a “shotgun pleading,” with leave to amend.",
+    ["Dixon-Moreno v. City of Orange Beach","Jeffrey Beaverstock"],[]],
+  ["Oct 1, 2025","Lawsuit","<b>Amended complaint filed in Dixon-Moreno v. City of Orange Beach</b>; the case is “back on.”",
+    ["Dixon-Moreno v. City of Orange Beach"],[]],
+  ["Nov 1, 2025","Schools","Deadline for applications to fill the school board vacancy: <b>17 Orange Beach residents apply</b>, meeting the limited eligibility criteria under Alabama law and Resolution No. 22-053 (residency, no employment by the school system or a private school board, high school diploma or equivalent, good moral character, no sex-offender or felony record).",
+    ["Orange Beach City School Board","Resolution No. 22-053"],[]],
+  ["Nov 2025","Ethics","According to an <b>anonymous source</b>, a complaint regarding Kennon's SEI filings was reportedly submitted to the Alabama Ethics Commission. (Unconfirmed independently.)",
+    ["Tony Kennon","Statement of Economic Interests","Alabama Ethics Commission"],[]],
+  ["Late 2025","Schools","The sitting school board submits five recommended finalists for council interviews. <b>Stephen Lewis</b>, the top-ranked candidate, is appointed to fill the remainder of Robert Stuart's unexpired term. <b>Clay Tindal</b> is also among the finalists but is not selected for this particular vacancy.",
+    ["Stephen Lewis","Clay Tindal","Robert Stuart","Orange Beach City School Board"],[]],
+  ["Mar 31, 2026","Ethics","Kennon's original <b>2025 SEI</b> filed, disclosing only one business entity: Law and Land Title, LLC.",
+    ["Tony Kennon","Statement of Economic Interests","Alabama Ethics Commission"],[]],
+  ["Apr 1, 2026","Lawsuit","Judge <b>allows Dixon-Moreno v. City of Orange Beach to proceed</b>; the First Amendment claim survives.",
+    ["Dixon-Moreno v. City of Orange Beach"],[]],
+  ["Apr 20–21, 2026","Politics","City Council <b>views the Labor Day incident body-cam footage</b> in executive session (at issue in <b>Dixon-Moreno v. City of Orange Beach</b>); Kennon allegedly threatens council members over its release.",
+    ["Labor Day Incident","Tony Kennon","Dixon-Moreno v. City of Orange Beach","Orange Beach City Council"],[]],
+  ["May 1, 2026","Ethics","Council members <b>Jeff Silvers, Ginger Harrelson &amp; Robert Stuart file an Alabama Ethics Commission complaint</b> against Kennon.",
+    ["Jeff Silvers","Ginger Harrelson","Robert Stuart","Tony Kennon","Alabama Ethics Commission"],[]],
+  ["May 3, 2026","Ethics","Kennon's <b>2024 and 2025 SEI filings are both amended</b>, months after original submission. Disclosed entities jump from 2 to 9 (2024) and 1 to 9 (2025), adding Gulf Coast Titleholder, LLC / II / III, APD Investing Management/Unlimited/Innovative, and (2025 only) Southeastern Qualified Exchange, LLC — described by outside analysis as a “title-holding cluster” and “1031-exchange infrastructure.” The amended 2025 filing also removes the public-facing \u201cLoan or Finance Companies\u201d and \u201cOther Insurance Companies\u201d categories, replacing them with a note that the information was instead sent by email to the Ethics Commission.",
+    ["Tony Kennon","Statement of Economic Interests","Alabama Ethics Commission","Gulf Coast Titleholder, LLC","APD Investing"],[]],
+  ["Early May 2026","Ethics","Shortly after the amendments, a <b>Town Hall</b> discusses major city projects including the proposed <b>Pirate's Voyage</b> development; Kennon acknowledges discussions with the developer and appears supportive, while at least two council members say they weren't fully aware of project details beforehand.",
+    ["Tony Kennon","Pirate's Voyage","Orange Beach City Council"],[]],
+  ["May 6, 2026","Meetings","Orange Beach City Council holds a <b>Town Hall / council meeting</b> covering multiple agenda items, including a <b>Board of Education seat appointment</b>.",
+    ["Orange Beach City Council","Orange Beach City School Board"],[]],
+  ["May 6, 2026","Schools","<b>Nelson Bauer's five-year Board of Education term expires</b>; rather than reappointing him, the Council votes to appoint <b>Clay Tindal</b> to the seat for the next five-year term. Bauer was not \u201cremoved\u201d &mdash; under Alabama law and OBCS policy, board members are state officers who generally cannot be removed by council vote over disagreement (removal would require impeachment or a qualifying legal disqualification). The five-member board is appointed by the City Council to staggered five-year terms, with typically one seat expiring per year &mdash; a structure intended to prevent sudden shifts in power and preserve institutional continuity.",
+    ["Nelson Bauer","Clay Tindal","Orange Beach City School Board","Orange Beach City Council"],[]],
+  ["Jul 9, 2026","Social","A council meeting reaches a <b>“boiling point”</b> over the Labor Day incident footage and the pending ethics complaint; PI Wendy Pickering (herself a defamation defendant) urges keeping the footage private.",
+    ["Labor Day Incident","Wendy Pickering","Dixon-Moreno v. City of Orange Beach","Orange Beach City Council"],[]],
+];
+const tl = document.getElementById('tl');
+const labels = {Context:'Context', Lawsuit:'Lawsuit', Politics:'Politics', Ethics:'SEI/Ethics', Land:'Land Deals', Social:'Social Media', Schools:'City Schools', Meetings:'Town Hall/Council'};
+const fileIcon = `<svg class="file-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>`;
+EVENTS.forEach(([date,k,desc,subtags,files])=>{
+  const el=document.createElement('div');
+  el.className='item'; el.dataset.k=k;
+  el.subtagsList = subtags || [];
+  const subtagsHtml = (subtags||[]).map(s=>`<span class="subtag" data-subtag="${s}">${s}</span>`).join('');
+  const fList = files || [];
+  const filesHtml = fList.length
+    ? fList.map(f=>`<a class="file-link" href="${f.url}" target="_blank" rel="noopener">${fileIcon}<span>${f.label}</span></a>`).join('')
+    : `<div class="no-files">No documents added yet.</div>`;
+  el.innerHTML=`<span class="dot"></span><div class="card">
+    <div class="date"><span>${date}</span><span class="tag ${k}">${labels[k]}</span></div>
+    <div class="desc">${desc}</div>
+    <div class="subtags">${subtagsHtml}</div>
+    <button class="expand-toggle" type="button"><span class="arrow">&#9656;</span> Documents &amp; Notes</button>
+    <div class="expand-panel">
+      <div class="files-label">Files</div>
+      ${filesHtml}
+    </div></div>`;
+  tl.appendChild(el);
+});
+const chips=[...document.querySelectorAll('.chip')];
+const active=new Set(['Context','Lawsuit','Politics','Ethics','Land','Social','Schools','Meetings']);
+let activeSubtag=null;
+const allKeys=['Context','Lawsuit','Politics','Ethics','Land','Social','Schools','Meetings'];
+function render(){
+  document.querySelectorAll('.item').forEach(it=>{
+    const show = activeSubtag ? it.subtagsList.includes(activeSubtag) : active.has(it.dataset.k);
+    it.classList.toggle('hidden',!show);
+    it.querySelectorAll('.subtag').forEach(sp=>{
+      sp.classList.toggle('active-filter', !!activeSubtag && sp.dataset.subtag===activeSubtag);
+    });
+  });
+  chips.forEach(c=>{
+    if(c.dataset.k==='all') c.classList.toggle('on', !activeSubtag && active.size===8);
+    else c.classList.toggle('on', !activeSubtag && active.has(c.dataset.k));
+  });
+  const banner=document.getElementById('subtagBanner');
+  const bannerText=document.getElementById('subtagBannerText');
+  if(activeSubtag){
+    banner.classList.add('show');
+    bannerText.textContent = activeSubtag;
+  } else {
+    banner.classList.remove('show');
+  }
+}
+chips.forEach(c=>c.addEventListener('click',()=>{
+  activeSubtag=null;
+  const k=c.dataset.k;
+  if(k==='all'){ allKeys.forEach(x=>active.add(x)); }
+  else { if(active.has(k)) active.delete(k); else active.add(k); if(active.size===0){allKeys.forEach(x=>active.add(x));} }
+  render();
+}));
+tl.addEventListener('click',(e)=>{
+  const subtagEl=e.target.closest('.subtag');
+  if(subtagEl){
+    const val=subtagEl.dataset.subtag;
+    activeSubtag = (activeSubtag===val) ? null : val;
+    render();
+    return;
+  }
+  const toggleEl=e.target.closest('.expand-toggle');
+  if(toggleEl){
+    toggleEl.closest('.item').classList.toggle('expanded');
+    return;
+  }
+});
+document.getElementById('subtagClearBtn').addEventListener('click',()=>{
+  activeSubtag=null;
+  render();
+});
+render();
+</script>
+</body>
+</html>
